@@ -1,0 +1,59 @@
+<html><head>
+</head>
+<body>
+    <div>
+        <input id="name" placeholder="Enter student name">
+        <input id="sNumber" placeholder="Enter student number">
+        <input id="startYear" placeholder="Enter start year"><br><br>
+        <input id="gender" placeholder="Enter Gender">
+        <input id="course" placeholder="Enter course name">
+
+        <button type="button" onclick="insertInfo()">Insert Info</button>
+        <button type="button" onclick="StudentData()">Show Info</button>
+    </div>
+
+    <div id="demo_div"><h1>Student Data:</h1><p>This is a 1999 student manasa with ID s000 in the f gender studying cs.</p><p>This is a 2024 student tex2 with ID s0002 in the m gender studying cs.</p></div>
+
+    <script>
+        const studentdata = {
+            students: [],
+            description: function(student) {
+                return "This is a " + student.StartYear + " student " + student.Name + " with ID " + student.SNumber + " in the " + student.Gender + " gender studying " + student.Course + ".";
+            },
+            student_info: function(student) {
+                return this.description(student);
+            }
+        }
+
+        function insertInfo() {
+            const newStudent = {
+                Name: document.getElementById("name").value,
+                SNumber: document.getElementById("sNumber").value,
+                StartYear: document.getElementById("startYear").value,
+                Gender: document.getElementById("gender").value,
+                Course: document.getElementById("course").value
+            };
+
+            studentdata.students.push(newStudent);
+            clearInputs();
+        }
+
+        function StudentData() {
+            let output = "<h1>Student Data:</h1>";
+            studentdata.students.forEach(student => {
+                output += `<p>${studentdata.student_info(student)}</p>`;
+            });
+            document.getElementById("demo_div").innerHTML = output;
+        }
+
+        function clearInputs() {
+            document.getElementById("name").value = '';
+            document.getElementById("sNumber").value = '';
+            document.getElementById("startYear").value = '';
+            document.getElementById("gender").value = '';
+            document.getElementById("course").value = '';
+        }
+    </script>
+
+
+</body></html>

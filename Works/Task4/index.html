@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+        #message {
+            margin-left: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="username" placeholder="Enter your name">
+        <button onclick="welcomeUser()">Enter</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        function welcomeUser() {
+            var name = document.getElementById("username").value;
+            if (name) {
+                document.getElementById("message").innerHTML = "Welcome to JS " + name;
+                alert("Welcome to JS " + name); // Added alert here
+            } else {
+                document.getElementById("message").innerHTML = "Please enter your name.";
+            }
+        }
+    </script>
+</body>
+</html>

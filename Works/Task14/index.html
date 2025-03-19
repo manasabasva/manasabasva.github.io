@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Value Generator</title>
+</head>
+<body>
+    <h2>Generate a Random Number</h2>
+    <input id="input_a" placeholder="Enter Min Value">
+    <input id="input_b" placeholder="Enter Max Value">
+    <button onclick="generate_random_value()">Generate</button>
+    
+    <div id="output_div" style="font-size: 20px; margin-top: 10px; font-weight: bold;"></div>
+
+    <h2 id="Time_out">Waiting...</h2>
+
+    <script>
+        let colors = ["red", "green", "blue", "gray", "ocean_blue"];
+        let timeoutId; // Store timeout ID so we can reset it if needed
+
+        function generate_random_value() {
+            let a = parseInt(document.getElementById("input_a").value);
+            let b = parseInt(document.getElementById("input_b").value);
+
+            if (isNaN(a) || isNaN(b) || a >= b) {
+                document.getElementById("output_div").innerHTML = "Please enter valid numbers (Min < Max)";
+                document.getElementById("output_div").style.color = "black";
+                return;
+            }
+
+            let random_value = Math.floor((b - a) * Math.random() + a);
+            document.getElementById("output_div").innerHTML = "Random Number: " + random_value;
+
+            let idx = Math.floor(Math.random() * colors.length);
+            document.getElementById("output_div").style.color = colors[idx];
+
+            // Reset timeout every time a new number is generated
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(welcome_timeout, 15000);
+        }
+
+        function welcome_timeout() {
+            document.getElementById("Time_out").innerHTML = "Vanished!";
+            document.getElementById("output_div").innerHTML = ""; // Clear the random number
+        }
+
+        // Initial timeout setup
+        timeoutId = setTimeout(welcome_timeout, 15000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        #demo_div {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .clear-btn {
+            background-color: #f44336;
+        }
+
+        .clear-btn:hover {
+            background-color: #e53935;
+        }
+
+        .show-btn {
+            background-color: #2196F3;
+        }
+
+        .show-btn:hover {
+            background-color: #1e88e5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Information</h1>
+
+        <input id="name" placeholder="Enter student name">
+        <input id="snumber" placeholder="Enter student number">
+        <input id="startyear" placeholder="Enter start year"><br><br>
+        <input id="gender" placeholder="Enter Gender">
+        <input id="course" placeholder="Enter course name">
+
+        <button type="button" onclick="insertInfo()">Insert Info</button>
+        <button class="show-btn" type="button" onclick="showInfo()">Show Info</button>
+        <button class="clear-btn" type="button" onclick="clearinputs()">Clear</button>
+        <button class="clear-btn" type="button" onclick="clearDisplay()">Clear Display</button><br><br>
+
+        <input id="search" placeholder="Search by name, number, or course" onkeyup="searchStudent()">
+    </div>
+
+    <div id="demo_div"><h1>Search Results:</h1>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student Number</th>
+                                <th>Start Year</th>
+                                <th>Gender</th>
+                                <th>Course</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                
+                        <tr>
+                            <td>test</td>
+                            <td>s000</td>
+                            <td>2039</td>
+                            <td>f</td>
+                            <td>cs</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>test2</td>
+                            <td>s002</td>
+                            <td>2023</td>
+                            <td>f</td>
+                            <td>cs</td>
+                        </tr>
+                    </tbody></table></div>
+
+    <script>
+        let students = [];
+
+        function Student(name, snumber, startyear, gender, course) {
+            this.name = name;
+            this.snumber = snumber;
+            this.startyear = startyear;
+            this.gender = gender;
+            this.course = course;
+        }
+
+        function insertInfo() {
+            let name = document.getElementById("name").value;
+            let snumber = document.getElementById("snumber").value;
+            let startyear = document.getElementById("startyear").value;
+            let gender = document.getElementById("gender").value;
+            let course = document.getElementById("course").value;
+
+            if (name && snumber && startyear && gender && course) {
+                let newStudent = new Student(name, snumber, startyear, gender, course);
+                students.push(newStudent);
+                clearinputs();
+            } else {
+                alert("Please fill out all fields.");
+            }
+        }
+
+        function showInfo() {
+            let output = "<h1>Student Data:</h1>";
+            output += `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Student Number</th>
+                            <th>Start Year</th>
+                            <th>Gender</th>
+                            <th>Course</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            students.forEach(function(student) {
+                output += `
+                    <tr>
+                        <td>${student.name}</td>
+                        <td>${student.snumber}</td>
+                        <td>${student.startyear}</td>
+                        <td>${student.gender}</td>
+                        <td>${student.course}</td>
+                    </tr>
+                `;
+            });
+            output += "</tbody></table>";
+            document.getElementById("demo_div").innerHTML = output;
+        }
+
+        function clearDisplay() {
+            document.getElementById("demo_div").innerHTML = "";
+        }
+
+        function clearinputs() {
+            document.getElementById("name").value = '';
+            document.getElementById("snumber").value = '';
+            document.getElementById("startyear").value = '';
+            document.getElementById("gender").value = '';
+            document.getElementById("course").value = '';
+        }
+
+        function searchStudent() {
+            let searchQuery = document.getElementById("search").value.toLowerCase();
+            let filteredStudents = students.filter(function(student) {
+                return student.name.toLowerCase().includes(searchQuery) ||
+                       student.snumber.includes(searchQuery) ||
+                       student.course.toLowerCase().includes(searchQuery);
+            });
+
+            displaySearchResults(filteredStudents);
+        }
+
+        function displaySearchResults(filteredStudents) {
+            let output = "<h1>Search Results:</h1>";
+            if (filteredStudents.length > 0) {
+                output += `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Student Number</th>
+                                <th>Start Year</th>
+                                <th>Gender</th>
+                                <th>Course</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                filteredStudents.forEach(function(student) {
+                    output += `
+                        <tr>
+                            <td>${student.name}</td>
+                            <td>${student.snumber}</td>
+                            <td>${student.startyear}</td>
+                            <td>${student.gender}</td>
+                            <td>${student.course}</td>
+                        </tr>
+                    `;
+                });
+                output += "</tbody></table>";
+            } else {
+                output += "<p>No students found matching your search.</p>";
+            }
+            document.getElementById("demo_div").innerHTML = output;
+        }
+    </script>
+
+
+
+</body></html>
