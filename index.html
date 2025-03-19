@@ -72,12 +72,14 @@ overflow-y: auto;
 transition: all 0.3s ease; 
 } 
 .task-content h1 { 
-color: #333; 
+color: #007bff; 
+font-size: 24px; 
 font-weight: 600; 
+margin-bottom: 15px; 
 } 
 iframe { 
 width: 100%; 
-height: 100%; 
+height: 90%; 
 border: none; 
 border-radius: 5px; 
 } 
@@ -114,38 +116,45 @@ font-size: 14px;
 <div class="task-list"> 
 <h2>Tasks</h2> 
 <ul id="task-list"> 
-<li onclick="loadTask('Works/Task1/index.html')"><span class="task-title">Task 1:</span> Expectation Document</li> 
-<li onclick="loadTask('Works/Task2/index.html')"><span class="task-title">Task 2:</span> Basic HTML Styling</li> 
-<li onclick="loadTask('Works/Task3/index.html')"><span class="task-title">Task 3:</span> CSS Hover</li> 
-<li onclick="loadTask('Works/Task4/index.html')"><span class="task-title">Task 4:</span> Welcome to JS</li> 
-<li onclick="loadTask('Works/Task5/index.html')"><span class="task-title">Task 5:</span> Calculator with JS</li> 
-<li onclick="loadTask('Works/Task6/index.html')"><span class="task-title">Task 6:</span> GitHub Integration</li> 
-<li onclick="loadTask('Works/Task7/index.html')"><span class="task-title">Task 7:</span> Console Output</li> 
-<li onclick="loadTask('Works/Task8/index.html')"><span class="task-title">Task 8:</span> String Operation</li> 
-<li onclick="loadTask('Works/Task9/index.html')"><span class="task-title">Task 9:</span> Conditions</li> 
-<li onclick="loadTask('Works/Task10/index.html')"><span class="task-title">Task 10:</span> Call-Stack with Array</li> 
-<li onclick="loadTask('Works/Task11/index.html')"><span class="task-title">Task 11:</span> Class Work - Loops</li> 
-<li onclick="loadTask('Works/Task12/index.html')"><span class="task-title">Task 12:</span> Class Work</li> 
-<li onclick="loadTask('Works/Task13/index.html')"><span class="task-title">Task 13:</span> Class Work - Objects_2</li> 
-<li onclick="loadTask('Works/Task14/index.html')"><span class="task-title">Task 14:</span> Class Work - Functions</li> 
-<li onclick="loadTask('Works/Task15/index.html')"><span class="task-title">Task 15:</span> Class Work - Class & Bootstrap</li> 
-<li onclick="loadTask('Works/Task16/index.html')"><span class="task-title">Task 16:</span> Class Work - JSON</li> 
+<li onclick="loadTask('Works/Task1/index.html', 'Task 1: Expectation Document')"><span class="task-title">Task 1:</span> Expectation Document</li> 
+<li onclick="loadTask('Works/Task2/index.html', 'Task 2: Basic HTML Styling')"><span class="task-title">Task 2:</span> Basic HTML Styling</li> 
+<li onclick="loadTask('Works/Task3/index.html', 'Task 3: CSS Hover')"><span class="task-title">Task 3:</span> CSS Hover</li> 
+<li onclick="loadTask('Works/Task4/index.html', 'Task 4: Welcome to JS')"><span class="task-title">Task 4:</span> Welcome to JS</li> 
+<li onclick="loadTask('Works/Task5/index.html', 'Task 5: Calculator with JS')"><span class="task-title">Task 5:</span> Calculator with JS</li> 
+<li onclick="loadTask('Works/Task6/index.html', 'Task 6: GitHub Integration')"><span class="task-title">Task 6:</span> GitHub Integration</li> 
+<li onclick="loadTask('Works/Task7/index.html', 'Task 7: Console Output')"><span class="task-title">Task 7:</span> Console Output</li> 
+<li onclick="loadTask('Works/Task8/index.html', 'Task 8: String Operation')"><span class="task-title">Task 8:</span> String Operation</li> 
+<li onclick="loadTask('Works/Task9/index.html', 'Task 9: Conditions')"><span class="task-title">Task 9:</span> Conditions</li> 
+<li onclick="loadTask('Works/Task10/index.html', 'Task 10: Call-Stack with Array')"><span class="task-title">Task 10:</span> Call-Stack with Array</li> 
+<li onclick="loadTask('Works/Task11/index.html', 'Task 11: Class Work - Loops')"><span class="task-title">Task 11:</span> Class Work - Loops</li> 
+<li onclick="loadTask('Works/Task12/index.html', 'Task 12: Class Work')"><span class="task-title">Task 12:</span> Class Work</li> 
+<li onclick="loadTask('Works/Task13/index.html', 'Task 13: Class Work - Objects_2')"><span class="task-title">Task 13:</span> Class Work - Objects_2</li> 
+<li onclick="loadTask('Works/Task14/index.html', 'Task 14: Class Work - Functions')"><span class="task-title">Task 14:</span> Class Work - Functions</li> 
+<li onclick="loadTask('Works/Task15/index.html', 'Task 15: Class Work - Class & Bootstrap')"><span class="task-title">Task 15:</span> Class Work - Class & Bootstrap</li> 
+<li onclick="loadTask('Works/Task16/index.html', 'Task 16: Class Work - JSON')"><span class="task-title">Task 16:</span> Class Work - JSON</li> 
 </ul> 
 </div> 
 <!-- Right side content --> 
 <div class="task-content" id="task-content"> 
-<h1>Select a task from the left</h1> 
+<h1 id="task-heading">Select a task from the left</h1> 
 </div> 
 </div> 
 <!-- JavaScript for Dynamic Content Loading --> 
 <script> 
-function loadTask(taskPath) { 
+function loadTask(taskPath, taskTitle) { 
 const taskContent = document.getElementById('task-content'); 
+const taskHeading = document.getElementById('task-heading'); 
+
+// Update task heading
+taskHeading.textContent = taskTitle; 
+
 // Create an iframe to display the task content 
 const iframe = document.createElement('iframe'); 
 iframe.src = taskPath; 
-// Clear previous content and append the iframe 
+
+// Clear previous content (except heading) and append the iframe 
 taskContent.innerHTML = ''; 
+taskContent.appendChild(taskHeading); 
 taskContent.appendChild(iframe); 
 } 
 </script> 
